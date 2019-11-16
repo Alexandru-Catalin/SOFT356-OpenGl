@@ -66,7 +66,6 @@ void findFile(){
 		while (getline(findFile, find)) 
 		{		
 			std::cout << find << std::endl;
-
 			if(find[0] == 'v' & find[1] == ' ') 
 			{
 				glm::vec3 vertex;
@@ -84,6 +83,7 @@ void findFile(){
 				iss >> uv.x;
 				iss>> uv.y;
 				temp_uvs.push_back(uv);
+				cout << uv.x;
 			}
 			else if (find[0] == 'vn' & find[1] == ' ')
 			{
@@ -93,37 +93,92 @@ void findFile(){
 				iss >> normal.y;
 				iss>> normal.z;
 				temp_normals.push_back(normal);
+				cout << normal.x;
 			}
 			else if (find[0] == 'f' & find[1] == ' ')
 			{
-				std::string vertex1, vertex2, vertex3;
+				std::string v1, v2, v3, v4, vt1, vt2, vt3, vt4, vn1, vn2, vn3, vn4;
 				unsigned int vertexIndex[3], uvIndex[3], normalIndex[3];
 				istringstream iss(find.substr(2));
-				iss >> vertexIndex[0]; 
-				iss >> uvIndex[0];
-				iss >> normalIndex[0];
-				iss >> vertexIndex[1];
-				iss >> uvIndex[1];
-				iss >> normalIndex[1];
-				iss >> vertexIndex[2];
-				iss >> uvIndex[2];
-				iss>> normalIndex[2];
+				string set1, set2, set3, set4;
+
+				std::getline(iss, set1, ' ');
+				std::getline(iss, set2, ' ');
+				std::getline(iss, set3, ' ');
+				std::getline(iss, set4, ' ');
 				
+
+				istringstream iss1(set1), iss2(set2), iss3(set3), iss4(set4);
+
+				std::getline(iss1, v1, '/');
+				std::getline(iss1, v2, '/');
+				std::getline(iss1, v3, '/');
+				//std::getline(iss2, v4, '/');
+				std::getline(iss2, vt1, '/');
+				std::getline(iss2, vt2, '/');
+				std::getline(iss2, vt3, '/');
+				//std::getline(iss3, vt4, '/');
+				std::getline(iss3, vn1, '/');
+				std::getline(iss3, vn2, '/');
+				std::getline(iss3, vn3, '/');
+				//std::getline(iss4, vn4, '/');
+
+				vertexIndex[0] = atoi(v1.c_str());
+				uvIndex[0] = atoi(v2.c_str());
+				normalIndex[0] = atoi(v3.c_str());
+				vertexIndex[1] = atoi(vt1.c_str());
+				uvIndex[1] = atoi(vt2.c_str());
+				normalIndex[1] = atoi(vt3.c_str());
+				vertexIndex[2] = atoi(vn1.c_str());
+				uvIndex[2] = atoi(vn2.c_str());
+				normalIndex[2] = atoi(vn3.c_str());
+				//vertexIndex[4] = atoi(v4.c_str());
+				//uvIndex[4] = atoi(v4.c_str());
+				//normalIndex[4] = atoi(v4.c_str());
+
 				vertexIndices.push_back(vertexIndex[0]);
 				vertexIndices.push_back(vertexIndex[1]);
 				vertexIndices.push_back(vertexIndex[2]);
+				//vertexIndices.push_back(vertexIndex[3]);
 				uvIndices.push_back(uvIndex[0]);
 				uvIndices.push_back(uvIndex[1]);
 				uvIndices.push_back(uvIndex[2]);
+				//uvIndices.push_back(uvIndex[3]);
 				normalIndices.push_back(normalIndex[0]);
 				normalIndices.push_back(normalIndex[1]);
 				normalIndices.push_back(normalIndex[2]);
-			}
-			
+				//normalIndices.push_back(normalIndex[3]);
+
+				cout << vertexIndex[1] << uvIndex[1] << normalIndex[1] << endl;
+				/*for (unsigned int i = 0; i < vertexIndices.size(); i++) 
+				{
+					unsigned int vertexIndex = vertexIndices[i];
+
+					glm::vec3 vertex = temp_vertices[vertexIndex - 1];
+					
+					temp_vertices.push_back(vertex);
+				}
+
+				for (unsigned int i = 0; i < uvIndices.size(); i++)
+				{
+					unsigned int uvIndex = uvIndices[i];
+
+					glm::vec2 uv = temp_uvs[uvIndex - 1];
+
+					temp_uvs.push_back(uv);
+				}
+
+				for (unsigned int i = 0; i < normalIndices.size(); i++)
+				{
+					unsigned int normalIndex = normalIndices[i];
+
+					glm::vec3 normal = temp_vertices[normalIndex - 1];
+
+					temp_normals.push_back(normal);
+				}*/
+			}	
 		}
-
 	}
-
 }
 
 
