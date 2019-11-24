@@ -72,7 +72,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\Users\amarcu\Desktop\SOFT356-OpenGl\SampleCode-master;C:\Users\amarcu\Desktop\SampleCode-master;E:\Work\Plymouth\Soft356\SampleCode\lib\;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\amarcu\Desktop\SOFT356-OpenGl-master\SOFT356-OpenGl-master\SampleCode-master;C:\Users\amarcu\Desktop\SOFT356-OpenGl\SampleCode-master;C:\Users\amarcu\Desktop\SampleCode-master;E:\Work\Plymouth\Soft356\SampleCode\lib\;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
