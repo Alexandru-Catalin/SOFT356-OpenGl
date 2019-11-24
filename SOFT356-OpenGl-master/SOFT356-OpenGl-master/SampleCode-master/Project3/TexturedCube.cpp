@@ -167,6 +167,11 @@ void findFile(
 		}
 	}
 
+	int count = 0;
+	glm::vec3 vertexTemp;
+	glm::vec2 uvTemp;
+	glm::vec3 normalTemp;
+
 	for (unsigned int i = 0; i < vertexIndices.size(); i++) {
 
 		// Get the indices of its attributes
@@ -184,6 +189,30 @@ void findFile(
 		out_uvs.push_back(uv);
 		out_normals.push_back(normal);
 
+		if (count == 0) 
+		{
+			//Save A
+			vertexTemp = vertex;
+			uvTemp = uv;
+			normalTemp = normal;
+		}
+		else if(count == 2)	
+		{
+			//Push C
+			out_vertices.push_back(vertex);
+			out_uvs.push_back(uv);
+			out_normals.push_back(normal);
+		}
+		else if(count == 3) 
+		{
+			//push A
+			out_vertices.push_back(vertexTemp);
+			out_uvs.push_back(uvTemp);
+			out_normals.push_back(normalTemp);
+
+			count = -1;
+		}
+		count++;
 	}
 	findFile.close();
 }
@@ -265,16 +294,16 @@ vector<glm::vec3> normals)
 	//glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 	glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(glm::vec3), &vertices[0], GL_STATIC_DRAW);
 
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, Buffers[Indices]);
+	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, Buffers[Indices]);
 	//glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-	//glBufferData(GL_ARRAY_BUFFER, normals.size() * sizeof(glm::vec3), &normals[0], GL_STATIC_DRAW);
+	
 	
 
 	glVertexAttribPointer(vPosition, 3, GL_FLOAT,
 		GL_FALSE, 0, BUFFER_OFFSET(0));
 	
 	//Colour Binding
-	glBindBuffer(GL_ARRAY_BUFFER, Buffers[Colours]);
+	//glBindBuffer(GL_ARRAY_BUFFER, Buffers[Colours]);
 	//glBufferStorage(GL_ARRAY_BUFFER, sizeof(colours), colours, 0);
 
 
