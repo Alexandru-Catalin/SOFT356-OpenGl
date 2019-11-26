@@ -189,30 +189,30 @@ void findFile(
 		out_uvs.push_back(uv);
 		out_normals.push_back(normal);
 
-		if (count == 0) 
-		{
-			//Save A
-			vertexTemp = vertex;
-			uvTemp = uv;
-			normalTemp = normal;
-		}
-		else if(count == 2)	
-		{
-			//Push C
-			out_vertices.push_back(vertex);
-			out_uvs.push_back(uv);
-			out_normals.push_back(normal);
-		}
-		else if(count == 3) 
-		{
-			//push A
-			out_vertices.push_back(vertexTemp);
-			out_uvs.push_back(uvTemp);
-			out_normals.push_back(normalTemp);
+		//if (count == 0) 
+		//{
+		//	//Save A
+		//	vertexTemp = vertex;
+		//	uvTemp = uv;
+		//	normalTemp = normal;
+		//}
+		//else if(count == 2)	
+		//{
+		//	//Push C
+		//	out_vertices.push_back(vertex);
+		//	out_uvs.push_back(uv);
+		//	out_normals.push_back(normal);
+		//}
+		//else if(count == 3) 
+		//{
+		//	//push A
+		//	out_vertices.push_back(vertexTemp);
+		//	out_uvs.push_back(uvTemp);
+		//	out_normals.push_back(normalTemp);
 
-			count = -1;
-		}
-		count++;
+		//	count = -1;
+		//}
+		//count++;
 	}
 	findFile.close();
 }
@@ -248,45 +248,45 @@ vector<glm::vec3> normals)
 	//	{-0.5f, -0.5f, 0.5f}, //6 bottom left
 	//	{-0.5f,  0.5f, 0.5f}  //7 top left 
 	//};
-	//GLuint indices[][3] = {  // note that we start from 0!
-	//	{0, 3, 1},  // first Triangle front
-	//	{3, 2, 1},   // second Triangle
-	//	
-	//	{4, 7, 0 },
-	//	{7, 3, 0 },
-	//	
-	//	{1, 2, 5 },
-	//	{2, 6, 5 },
-	//	
-	//	{5, 4, 0 },
-	//	{0, 1, 5 },
-	//	
-	//	{2, 3, 7 },
-	//	{7, 6, 2 },
-	//	
-	//	{4, 5, 7 },  // first Triangle back
-	//	{7, 5, 6 }   // second Triangle
-	//};
+	GLuint indices[][3] = {  // note that we start from 0!
+		{0, 3, 1},  // first Triangle front
+		{3, 2, 1},   // second Triangle
+		
+		{4, 7, 0 },
+		{7, 3, 0 },
+		
+		{1, 2, 5 },
+		{2, 6, 5 },
+		
+		{5, 4, 0 },
+		{0, 1, 5 },
+		
+		{2, 3, 7 },
+		{7, 6, 2 },
+		
+		{4, 5, 7 },  // first Triangle back
+		{7, 5, 6 }   // second Triangle
+	};
 
-	//GLfloat  colours[][4] = {
-	//	{ 1.0f, 0.0f, 0.0f, 1.0f }, { 0.0f, 1.0f, 0.0f, 1.0f }, { 0.0f, 0.0f, 1.0f, 1.0f },  
-	//	{ 1.0f, 1.0f, 0.0f, 1.0f }, { 1.0f, 0.0f, 0.0f, 1.0f }, { 0.0f, 1.0f, 0.0f, 1.0f }, 
-	//	{ 0.0f, 0.0f, 1.0f, 1.0f }, { 1.0f, 1.0f, 0.0f, 1.0f }, 
-	//};
-	//GLfloat  texture_coords[] = {
-	//	 1.0f, 1.0f,
-	//	 1.0f, 0.0f,
-	//	 0.0f, 0.0f,
-	//	 0.0f, 1.0f,
+	GLfloat  colours[][4] = {
+		{ 1.0f, 0.0f, 0.0f, 1.0f }, { 0.0f, 1.0f, 0.0f, 1.0f }, { 0.0f, 0.0f, 1.0f, 1.0f },  
+		{ 1.0f, 1.0f, 0.0f, 1.0f }, { 1.0f, 0.0f, 0.0f, 1.0f }, { 0.0f, 1.0f, 0.0f, 1.0f }, 
+		{ 0.0f, 0.0f, 1.0f, 1.0f }, { 1.0f, 1.0f, 0.0f, 1.0f }, 
+	};
+	GLfloat  texture_coords[] = {
+		 1.0f, 1.0f,
+		 1.0f, 0.0f,
+		 0.0f, 0.0f,
+		 0.0f, 1.0f,
 
-	//	 0.0f, 1.0f,
-	//     0.0f, 0.0f,
-	//	 1.0f, 0.0f,
-	//	 1.0f, 1.0f,
+		 0.0f, 1.0f,
+	     0.0f, 0.0f,
+		 1.0f, 0.0f,
+		 1.0f, 1.0f,
 
-	//	
-	//
-	//};
+		
+	
+	};
 
 	glGenBuffers(NumBuffers, Buffers);
 	
@@ -294,8 +294,8 @@ vector<glm::vec3> normals)
 	//glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 	glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(glm::vec3), &vertices[0], GL_STATIC_DRAW);
 
-	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, Buffers[Indices]);
-	//glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, Buffers[Indices]);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 	
 	
 
@@ -312,8 +312,8 @@ vector<glm::vec3> normals)
 
 	//Texture Binding
 	glBindBuffer(GL_ARRAY_BUFFER, Buffers[Tex]);
-	//glBufferData(GL_ARRAY_BUFFER, sizeof(texture_coords), texture_coords, GL_STATIC_DRAW);
-	glBufferData(GL_ARRAY_BUFFER, uvs.size() * sizeof(glm::vec2), &uvs[0], GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(texture_coords), texture_coords, GL_STATIC_DRAW);
+	//glBufferData(GL_ARRAY_BUFFER, uvs.size() * sizeof(glm::vec2), &uvs[0], GL_STATIC_DRAW);
 	glVertexAttribPointer(tPosition, 2, GL_FLOAT,
 		GL_FALSE, 0, BUFFER_OFFSET(0));
 
@@ -424,7 +424,7 @@ main(int argc, char** argv)
 	while (!glfwWindowShouldClose(window))
 	{
 		// uncomment to draw only wireframe 
-		// glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		 glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
 		display();
 		glfwSwapBuffers(window);
