@@ -172,6 +172,9 @@ void findFile(
 	glm::vec2 uvTemp;
 	glm::vec3 normalTemp;
 
+	glm::vec3 vertexTemp1;
+	glm::vec2 uvTemp1;
+	glm::vec3 normalTemp1;
 	for (unsigned int i = 0; i < vertexIndices.size(); i++) {
 
 		// Get the indices of its attributes
@@ -185,9 +188,51 @@ void findFile(
 		glm::vec3 normal = temp_normals[normalIndex - 1];
 
 		// Put the attributes in buffers
-		out_vertices.push_back(vertex);
-		out_uvs.push_back(uv);
-		out_normals.push_back(normal);
+		if (count !=3) {
+			out_vertices.push_back(vertex);
+			out_uvs.push_back(uv);
+			out_normals.push_back(normal);
+		}
+
+		if (count == 0) 
+		{
+			//Save A
+			vertexTemp = vertex;
+			uvTemp = uv;
+			normalTemp = normal;
+		}
+		else if(count == 1)	
+		{
+			//Push C
+
+			vertexTemp1 = vertex;
+			uvTemp1 = uv;
+			normalTemp1 = normal;
+			
+		}
+		else if(count == 3) 
+		{
+			//push A
+
+
+			out_vertices.push_back(vertexTemp1);
+			out_uvs.push_back(uvTemp1);
+			out_normals.push_back(normalTemp1);
+
+			out_vertices.push_back(vertexTemp);
+			out_uvs.push_back(uvTemp);
+			out_normals.push_back(normalTemp);
+
+
+
+			out_vertices.push_back(vertex);
+			out_uvs.push_back(uv);
+			out_normals.push_back(normal);
+			
+
+			count = -1;
+		}
+		count++;
 
 		//if (count == 0) 
 		//{
@@ -196,19 +241,34 @@ void findFile(
 		//	uvTemp = uv;
 		//	normalTemp = normal;
 		//}
-		//else if(count == 2)	
+		//else if(count == 1)	
 		//{
 		//	//Push C
-		//	out_vertices.push_back(vertex);
-		//	out_uvs.push_back(uv);
-		//	out_normals.push_back(normal);
+
+		//	vertexTemp1 = vertex;
+		//	uvTemp1 = uv;
+		//	normalTemp1 = normal;
+		//	
 		//}
 		//else if(count == 3) 
 		//{
 		//	//push A
+
+
+		//	out_vertices.push_back(vertexTemp1);
+		//	out_uvs.push_back(uvTemp1);
+		//	out_normals.push_back(normalTemp1);
+
 		//	out_vertices.push_back(vertexTemp);
 		//	out_uvs.push_back(uvTemp);
 		//	out_normals.push_back(normalTemp);
+
+
+
+		//	out_vertices.push_back(vertex);
+		//	out_uvs.push_back(uv);
+		//	out_normals.push_back(normal);
+		//	
 
 		//	count = -1;
 		//}
