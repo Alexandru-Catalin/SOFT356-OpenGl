@@ -48,19 +48,73 @@ const GLuint  NumVertices = 36;
 // f is a face
 
 
+void readTexture(float& out_Ns,
+	glm::vec4 & out_Ka,
+	glm::vec3 & out_Kd,
+	glm::vec3 & out_Ks,float& trans, string& texture, string& file) 
+{
+
+	string read;
+	ifstream readFile("media/" + file + ".mtl");
+
+	if (readFile.is_open()) {
+		while (getline(readFile, read)) {
+			std::cout << read << std::endl;
+			if (read[0] == 'K' && read[1] == 'a')
+			{
+				istringstream iss(read.substr(2));
+				iss >> out_Ka.x;
+				iss >> out_Ka.y;
+				iss >> out_Ka.z;
+				out_Ka.w = 1.0;
+				cout << out_Ka.x;
+			}
+			else if (read[0] == 'K' && read[1] == 'd')
+			{
+				istringstream iss(read.substr(2));
+				iss >> out_Kd.x;
+				iss >> out_Kd.y;
+				iss >> out_Kd.z;
+				cout << out_Kd.x;
+			}
+			else if (read[0] == 'K' && read[1] == 's')
+			{
+				istringstream iss(read.substr(2));
+				iss >> out_Ks.x;
+				iss >> out_Ks.y;
+				iss >> out_Ks.z;
+				cout << out_Ks.x;
+			}
+			else if (read.substr(0, 6)== "map_Kd")
+			{
+				istringstream iss(read.substr(7));
+				texture = iss.str();
+			}
+			else if (read[0] == 'd' && read[1] == ' ')
+			{
+				istringstream iss(read.substr(2));
+				iss >> trans;
+				cout <<trans;
+			}
+
+		}
+		out_Ka.w = trans;
+		texture = "media/" + texture;
+		
+	}
+	readFile.close();
+}
+
 void findFile(
 	std::vector<glm::vec3>& out_vertices,
 	std::vector<glm::vec2>& out_uvs,
-	std::vector<glm::vec3>& out_normals
+	std::vector<glm::vec3>& out_normals,string& file
 )
 {
 
 	//read the file
 	string find;
-	cout << "Enter file name: \n";
-
-	cin >> find;
-	ifstream findFile("media/" + find);
+	ifstream findFile("media/" + file + ".obj");
 
 	vector<unsigned int> vertexIndices, uvIndices, normalIndices;
 	vector<glm::vec3> temp_vertices;
@@ -281,7 +335,8 @@ void findFile(
 void
 init(vector<glm::vec3> vertices,
 vector<glm::vec2> uvs,
-vector<glm::vec3> normals)
+vector<glm::vec3> normals,
+string texture)
 {
 	glGenVertexArrays(NumVAOs, VAOs);
 	glBindVertexArray(VAOs[Triangles]);
@@ -372,8 +427,8 @@ vector<glm::vec3> normals)
 
 	//Texture Binding
 	glBindBuffer(GL_ARRAY_BUFFER, Buffers[Tex]);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(texture_coords), texture_coords, GL_STATIC_DRAW);
-	//glBufferData(GL_ARRAY_BUFFER, uvs.size() * sizeof(glm::vec2), &uvs[0], GL_STATIC_DRAW);
+	//glBufferData(GL_ARRAY_BUFFER, sizeof(texture_coords), texture_coords, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, uvs.size() * sizeof(glm::vec2), &uvs[0], GL_STATIC_DRAW);
 	glVertexAttribPointer(tPosition, 2, GL_FLOAT,
 		GL_FALSE, 0, BUFFER_OFFSET(0));
 
@@ -393,7 +448,7 @@ vector<glm::vec3> normals)
 	// load image, create texture and generate mipmaps
 	GLint width, height, nrChannels;
 	stbi_set_flip_vertically_on_load(true); // tell stb_image.h to flip loaded texture's on the y-axis.
-	unsigned char* data = stbi_load("media/textures/awesomeface.png", &width, &height, &nrChannels, 0);
+	unsigned char* data = stbi_load(texture.c_str(), &width, &height, &nrChannels, 0);
 	if (data)
 	{
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
@@ -479,12 +534,25 @@ main(int argc, char** argv)
 	vector<glm::vec3> vertices;
 	vector<glm::vec2> uvs;
 	vector<glm::vec3> normals;
-	findFile(vertices, uvs, normals);
-	init(vertices, uvs,	normals);
+
+	string find;
+	cin >> find;
+
+	float Ns;
+	glm::vec4 Ka;
+	glm::vec3 Kd;
+	glm::vec3 Ks;
+	float trans;
+	string texture;
+
+	findFile(vertices, uvs, normals, find);
+	readTexture(Ns, Ka, Kd, Ks, trans, texture, find);
+	init(vertices, uvs,	normals, texture);
+	
 	while (!glfwWindowShouldClose(window))
 	{
 		// uncomment to draw only wireframe 
-		 glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		 //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
 		display();
 		glfwSwapBuffers(window);
