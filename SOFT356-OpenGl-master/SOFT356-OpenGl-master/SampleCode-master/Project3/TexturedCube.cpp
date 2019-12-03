@@ -49,9 +49,9 @@ const GLuint  NumVertices = 36;
 
 
 void readTexture(float& out_Ns,
-	glm::vec4 & out_Ka,
-	glm::vec3 & out_Kd,
-	glm::vec3 & out_Ks,float& trans, string& texture, string& file) 
+	glm::vec4& out_Ka,
+	glm::vec3& out_Kd,
+	glm::vec3& out_Ks, float& trans, string& texture, string& file)
 {
 
 	string read;
@@ -85,7 +85,7 @@ void readTexture(float& out_Ns,
 				iss >> out_Ks.z;
 				cout << out_Ks.x;
 			}
-			else if (read.substr(0, 6)== "map_Kd")
+			else if (read.substr(0, 6) == "map_Kd")
 			{
 				istringstream iss(read.substr(7));
 				texture = iss.str();
@@ -94,13 +94,13 @@ void readTexture(float& out_Ns,
 			{
 				istringstream iss(read.substr(2));
 				iss >> trans;
-				cout <<trans;
+				cout << trans;
 			}
 
 		}
 		out_Ka.w = trans;
 		texture = "media/" + texture;
-		
+
 	}
 	readFile.close();
 }
@@ -108,7 +108,7 @@ void readTexture(float& out_Ns,
 void findFile(
 	std::vector<glm::vec3>& out_vertices,
 	std::vector<glm::vec2>& out_uvs,
-	std::vector<glm::vec3>& out_normals,string& file
+	std::vector<glm::vec3>& out_normals, string& file
 )
 {
 
@@ -121,37 +121,38 @@ void findFile(
 	vector<glm::vec2> temp_uvs;
 	vector<glm::vec3> temp_normals;
 
-	if (findFile.is_open()) 
-	{	
-		while (getline(findFile, find)) 
-		{		
+	if (findFile.is_open())
+	{
+		while (getline(findFile, find))
+		{
 			std::cout << find << std::endl;
-			if(find[0] == 'v' & find[1] == ' ') 
+			if (find[0] == 'v' && find[1] == ' ')
 			{
 				glm::vec3 vertex;
 				istringstream iss(find.substr(2));
-				iss >> vertex.x; 
-				iss >> vertex.y; 
+				iss >> vertex.x;
+				iss >> vertex.y;
 				iss >> vertex.z;
 				temp_vertices.push_back(vertex);
 				cout << vertex.x;
 			}
-			else if(find[0] == 'v' & find[1] == 't')
+			else if (find[0] == 'v' && find[1] == 't')
 			{
 				glm::vec2 uv;
 				istringstream iss(find.substr(2));
 				iss >> uv.x;
-				iss>> uv.y;
+				iss >> uv.y;
 				temp_uvs.push_back(uv);
 				cout << uv.x;
+
 			}
-			else if (find[0] == 'v' & find[1] == 'n')
+			else if (find[0] == 'v' && find[1] == 'n')
 			{
 				glm::vec3 normal;
 				istringstream iss(find.substr(2));
 				iss >> normal.x;
 				iss >> normal.y;
-				iss>> normal.z;
+				iss >> normal.z;
 				temp_normals.push_back(normal);
 				cout << normal.x;
 			}
@@ -166,39 +167,39 @@ void findFile(
 				std::getline(iss, set2, ' ');
 				std::getline(iss, set3, ' ');
 				std::getline(iss, set4, ' ');
-				
+
 				istringstream iss1(set1), iss2(set2), iss3(set3), iss4(set4);
 				//set1
 				std::getline(iss1, v1, '/');
-				std::getline(iss1, vt1, '/');
-				std::getline(iss1, vn1, '/');
+				std::getline(iss1, v2, '/');
+				std::getline(iss1, v3, '/');
 				//set2
-				std::getline(iss2, v2, '/');
+				std::getline(iss2, v4, '/');
+				std::getline(iss2, vt1, '/');
 				std::getline(iss2, vt2, '/');
-				std::getline(iss2, vn2, '/');
 				//set3
-				std::getline(iss3, v3, '/');
 				std::getline(iss3, vt3, '/');
-				std::getline(iss3, vn3, '/');
+				std::getline(iss3, vt4, '/');
+				std::getline(iss3, vn1, '/');
 				//set4
-				std::getline(iss4, v4, '/');
-				std::getline(iss4, vt4, '/');
+				std::getline(iss4, vn2, '/');
+				std::getline(iss4, vn3, '/');
 				std::getline(iss4, vn4, '/');
 
 				vertexIndex[0] = atoi(v1.c_str());
-				uvIndex[0] = atoi(vt1.c_str());
-				normalIndex[0] = atoi(vn1.c_str());
+				uvIndex[0] = atoi(v2.c_str());
+				normalIndex[0] = atoi(v3.c_str());
 
-				vertexIndex[1] = atoi(v2.c_str());
-				uvIndex[1] = atoi(vt2.c_str());
-				normalIndex[1] = atoi(vn2.c_str());
+				vertexIndex[1] = atoi(v4.c_str());
+				uvIndex[1] = atoi(vt1.c_str());
+				normalIndex[1] = atoi(vt2.c_str());
 
-				vertexIndex[2] = atoi(v3.c_str());
-				uvIndex[2] = atoi(vt3.c_str());
-				normalIndex[2] = atoi(vn3.c_str());
+				vertexIndex[2] = atoi(vt3.c_str());
+				uvIndex[2] = atoi(vt4.c_str());
+				normalIndex[2] = atoi(vn1.c_str());
 
-				vertexIndex[3] = atoi(v4.c_str());
-				uvIndex[3] = atoi(vt4.c_str());
+				vertexIndex[3] = atoi(vn2.c_str());
+				uvIndex[3] = atoi(vn3.c_str());
 				normalIndex[3] = atoi(vn4.c_str());
 
 				vertexIndices.push_back(vertexIndex[0]);
@@ -210,14 +211,14 @@ void findFile(
 				uvIndices.push_back(uvIndex[1]);
 				uvIndices.push_back(uvIndex[2]);
 				uvIndices.push_back(uvIndex[3]);
-				
+
 				normalIndices.push_back(normalIndex[0]);
 				normalIndices.push_back(normalIndex[1]);
 				normalIndices.push_back(normalIndex[2]);
 				normalIndices.push_back(normalIndex[3]);
-				
+
 				cout << vertexIndex[0] << uvIndex[0] << normalIndex[0] << endl;
-			}	
+			}
 		}
 	}
 
@@ -242,29 +243,29 @@ void findFile(
 		glm::vec3 normal = temp_normals[normalIndex - 1];
 
 		// Put the attributes in buffers
-		if (count !=3) {
+		if (count != 3) {
 			out_vertices.push_back(vertex);
 			out_uvs.push_back(uv);
 			out_normals.push_back(normal);
 		}
 
-		if (count == 0) 
+		if (count == 0)
 		{
 			//Save A
 			vertexTemp = vertex;
 			uvTemp = uv;
 			normalTemp = normal;
 		}
-		else if(count == 2)	
+		else if (count == 2)
 		{
 			//Push C
 
 			vertexTemp1 = vertex;
 			uvTemp1 = uv;
 			normalTemp1 = normal;
-			
+
 		}
-		else if(count == 3) 
+		else if (count == 3)
 		{
 			//push A
 
@@ -282,7 +283,7 @@ void findFile(
 			out_vertices.push_back(vertex);
 			out_uvs.push_back(uv);
 			out_normals.push_back(normal);
-			
+
 
 			count = -1;
 		}
@@ -334,9 +335,9 @@ void findFile(
 
 void
 init(vector<glm::vec3> vertices,
-vector<glm::vec2> uvs,
-vector<glm::vec3> normals,
-string texture)
+	vector<glm::vec2> uvs,
+	vector<glm::vec3> normals,
+	string texture)
 {
 	glGenVertexArrays(NumVAOs, VAOs);
 	glBindVertexArray(VAOs[Triangles]);
@@ -366,60 +367,47 @@ string texture)
 	//GLuint indices[][3] = {  // note that we start from 0!
 	//	{0, 3, 1},  // first Triangle front
 	//	{3, 2, 1},   // second Triangle
-	//	
+
 	//	{4, 7, 0 },
 	//	{7, 3, 0 },
-	//	
+
 	//	{1, 2, 5 },
 	//	{2, 6, 5 },
-	//	
+
 	//	{5, 4, 0 },
 	//	{0, 1, 5 },
-	//	
+
 	//	{2, 3, 7 },
 	//	{7, 6, 2 },
-	//	
+
 	//	{4, 5, 7 },  // first Triangle back
 	//	{7, 5, 6 }   // second Triangle
 	//};
 
 	GLfloat  colours[][4] = {
-		{ 1.0f, 0.0f, 0.0f, 1.0f }, { 0.0f, 1.0f, 0.0f, 1.0f }, { 0.0f, 0.0f, 1.0f, 1.0f },  
-		{ 1.0f, 1.0f, 0.0f, 1.0f }, { 1.0f, 0.0f, 0.0f, 1.0f }, { 0.0f, 1.0f, 0.0f, 1.0f }, 
-		{ 0.0f, 0.0f, 1.0f, 1.0f }, { 1.0f, 1.0f, 0.0f, 1.0f }, 
+		{ 1.0f, 0.0f, 0.0f, 1.0f }, { 0.0f, 1.0f, 0.0f, 1.0f }, { 0.0f, 0.0f, 1.0f, 1.0f },
+		{ 1.0f, 1.0f, 0.0f, 1.0f }, { 1.0f, 0.0f, 0.0f, 1.0f }, { 0.0f, 1.0f, 0.0f, 1.0f },
+		{ 0.0f, 0.0f, 1.0f, 1.0f }, { 1.0f, 1.0f, 0.0f, 1.0f },
 	};
-	GLfloat  texture_coords[] = {
-		 1.0f, 1.0f,
-		 1.0f, 0.0f,
-		 0.0f, 0.0f,
-		 0.0f, 1.0f,
 
-		 0.0f, 1.0f,
-	     0.0f, 0.0f,
-		 1.0f, 0.0f,
-		 1.0f, 1.0f,
-
-		
-	
-	};
 
 	glGenBuffers(NumBuffers, Buffers);
-	
+
 	glBindBuffer(GL_ARRAY_BUFFER, Buffers[Triangles]);
 	//glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 	glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(glm::vec3), &vertices[0], GL_STATIC_DRAW);
 
 	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, Buffers[Indices]);
 	//glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-	
-	
+
+
 
 	glVertexAttribPointer(vPosition, 3, GL_FLOAT,
 		GL_FALSE, 0, BUFFER_OFFSET(0));
-	
+
 	//Colour Binding
-	//glBindBuffer(GL_ARRAY_BUFFER, Buffers[Colours]);
-	//glBufferStorage(GL_ARRAY_BUFFER, sizeof(colours), colours, 0);
+	glBindBuffer(GL_ARRAY_BUFFER, Buffers[Colours]);
+	glBufferStorage(GL_ARRAY_BUFFER, sizeof(colours), colours, 0);
 
 
 	glVertexAttribPointer(cPosition, 4, GL_FLOAT,
@@ -434,7 +422,7 @@ string texture)
 
 	// load and create a texture 
 	// -------------------------
-	
+
 	// texture 1
 	// ---------
 	glGenTextures(1, &texture1);
@@ -486,7 +474,7 @@ string texture)
 	glUniformMatrix4fv(mvpLoc, 1, GL_FALSE, glm::value_ptr(mvp));
 
 	glEnableVertexAttribArray(vPosition);
-	glEnableVertexAttribArray(cPosition); 
+	glEnableVertexAttribArray(cPosition);
 	glEnableVertexAttribArray(tPosition);
 }
 
@@ -510,8 +498,9 @@ display(void)
 
 	glBindVertexArray(VAOs[Triangles]);
 	glBindTexture(GL_TEXTURE_2D, texture1);
-	glDrawArrays(GL_TRIANGLES, 0, NumVertices );
-	
+	//glDrawElements(GL_TRIANGLES, NumVertices, GL_UNSIGNED_INT, 0);
+	glDrawArrays(GL_TRIANGLES, 0, NumVertices);
+
 }
 
 //----------------------------------------------------------------------------
@@ -530,7 +519,7 @@ main(int argc, char** argv)
 	glfwMakeContextCurrent(window);
 	glewInit();
 
-	
+
 	vector<glm::vec3> vertices;
 	vector<glm::vec2> uvs;
 	vector<glm::vec3> normals;
@@ -547,8 +536,8 @@ main(int argc, char** argv)
 
 	findFile(vertices, uvs, normals, find);
 	readTexture(Ns, Ka, Kd, Ks, trans, texture, find);
-	init(vertices, uvs,	normals, texture);
-	
+	init(vertices, uvs, normals, texture);
+
 	while (!glfwWindowShouldClose(window))
 	{
 		// uncomment to draw only wireframe 
