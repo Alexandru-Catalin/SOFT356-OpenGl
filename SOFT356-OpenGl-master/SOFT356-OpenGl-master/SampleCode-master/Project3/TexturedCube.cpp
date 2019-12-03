@@ -155,7 +155,7 @@ void findFile(
 				temp_normals.push_back(normal);
 				cout << normal.x;
 			}
-			else if (find[0] == 'f' & find[1] == ' ')
+			else if (find[0] == 'f' && find[1] == ' ')
 			{
 				std::string v1, v2, v3, v4, vt1, vt2, vt3, vt4, vn1, vn2, vn3, vn4;
 				unsigned int vertexIndex[4], uvIndex[4], normalIndex[4];
@@ -170,35 +170,35 @@ void findFile(
 				istringstream iss1(set1), iss2(set2), iss3(set3), iss4(set4);
 				//set1
 				std::getline(iss1, v1, '/');
-				std::getline(iss1, v2, '/');
-				std::getline(iss1, v3, '/');
+				std::getline(iss1, vt1, '/');
+				std::getline(iss1, vn1, '/');
 				//set2
-				std::getline(iss2, v4, '/');
-				std::getline(iss2, vt1, '/');
+				std::getline(iss2, v2, '/');
 				std::getline(iss2, vt2, '/');
+				std::getline(iss2, vn2, '/');
 				//set3
+				std::getline(iss3, v3, '/');
 				std::getline(iss3, vt3, '/');
-				std::getline(iss3, vt4, '/');
-				std::getline(iss3, vn1, '/');
+				std::getline(iss3, vn3, '/');
 				//set4
-				std::getline(iss4, vn2, '/');
-				std::getline(iss4, vn3, '/');
+				std::getline(iss4, v4, '/');
+				std::getline(iss4, vt4, '/');
 				std::getline(iss4, vn4, '/');
 
 				vertexIndex[0] = atoi(v1.c_str());
-				uvIndex[0] = atoi(v2.c_str());
-				normalIndex[0] = atoi(v3.c_str());
+				uvIndex[0] = atoi(vt1.c_str());
+				normalIndex[0] = atoi(vn1.c_str());
 
-				vertexIndex[1] = atoi(v4.c_str());
-				uvIndex[1] = atoi(vt1.c_str());
-				normalIndex[1] = atoi(vt2.c_str());
+				vertexIndex[1] = atoi(v2.c_str());
+				uvIndex[1] = atoi(vt2.c_str());
+				normalIndex[1] = atoi(vn2.c_str());
 
-				vertexIndex[2] = atoi(vt3.c_str());
-				uvIndex[2] = atoi(vt4.c_str());
-				normalIndex[2] = atoi(vn1.c_str());
+				vertexIndex[2] = atoi(v3.c_str());
+				uvIndex[2] = atoi(vt3.c_str());
+				normalIndex[2] = atoi(vn3.c_str());
 
-				vertexIndex[3] = atoi(vn2.c_str());
-				uvIndex[3] = atoi(vn3.c_str());
+				vertexIndex[3] = atoi(v4.c_str());
+				uvIndex[3] = atoi(vt4.c_str());
 				normalIndex[3] = atoi(vn4.c_str());
 
 				vertexIndices.push_back(vertexIndex[0]);
@@ -255,7 +255,7 @@ void findFile(
 			uvTemp = uv;
 			normalTemp = normal;
 		}
-		else if(count == 1)	
+		else if(count == 2)	
 		{
 			//Push C
 
@@ -269,15 +269,15 @@ void findFile(
 			//push A
 
 
-			out_vertices.push_back(vertexTemp1);
-			out_uvs.push_back(uvTemp1);
-			out_normals.push_back(normalTemp1);
+			
 
 			out_vertices.push_back(vertexTemp);
 			out_uvs.push_back(uvTemp);
 			out_normals.push_back(normalTemp);
 
-
+			out_vertices.push_back(vertexTemp1);
+			out_uvs.push_back(uvTemp1);
+			out_normals.push_back(normalTemp1);
 
 			out_vertices.push_back(vertex);
 			out_uvs.push_back(uv);
@@ -363,25 +363,25 @@ string texture)
 	//	{-0.5f, -0.5f, 0.5f}, //6 bottom left
 	//	{-0.5f,  0.5f, 0.5f}  //7 top left 
 	//};
-	GLuint indices[][3] = {  // note that we start from 0!
-		{0, 3, 1},  // first Triangle front
-		{3, 2, 1},   // second Triangle
-		
-		{4, 7, 0 },
-		{7, 3, 0 },
-		
-		{1, 2, 5 },
-		{2, 6, 5 },
-		
-		{5, 4, 0 },
-		{0, 1, 5 },
-		
-		{2, 3, 7 },
-		{7, 6, 2 },
-		
-		{4, 5, 7 },  // first Triangle back
-		{7, 5, 6 }   // second Triangle
-	};
+	//GLuint indices[][3] = {  // note that we start from 0!
+	//	{0, 3, 1},  // first Triangle front
+	//	{3, 2, 1},   // second Triangle
+	//	
+	//	{4, 7, 0 },
+	//	{7, 3, 0 },
+	//	
+	//	{1, 2, 5 },
+	//	{2, 6, 5 },
+	//	
+	//	{5, 4, 0 },
+	//	{0, 1, 5 },
+	//	
+	//	{2, 3, 7 },
+	//	{7, 6, 2 },
+	//	
+	//	{4, 5, 7 },  // first Triangle back
+	//	{7, 5, 6 }   // second Triangle
+	//};
 
 	GLfloat  colours[][4] = {
 		{ 1.0f, 0.0f, 0.0f, 1.0f }, { 0.0f, 1.0f, 0.0f, 1.0f }, { 0.0f, 0.0f, 1.0f, 1.0f },  
@@ -409,8 +409,8 @@ string texture)
 	//glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 	glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(glm::vec3), &vertices[0], GL_STATIC_DRAW);
 
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, Buffers[Indices]);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, Buffers[Indices]);
+	//glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 	
 	
 
@@ -504,13 +504,13 @@ display(void)
 	glClearBufferfv(GL_COLOR, 0, black);
 	glClear(GL_COLOR_BUFFER_BIT);
 	// bind textures on corresponding texture units
-	glFrontFace(GL_CW);
-	/*glCullFace(GL_BACK);
-	glEnable(GL_CULL_FACE);*/
+	//glFrontFace(GL_CW);
+	//glCullFace(GL_BACK);
+	glEnable(GL_CULL_FACE);
 
 	glBindVertexArray(VAOs[Triangles]);
 	glBindTexture(GL_TEXTURE_2D, texture1);
-	glDrawElements(GL_TRIANGLES, NumVertices, GL_UNSIGNED_INT, 0);
+	glDrawArrays(GL_TRIANGLES, 0, NumVertices );
 	
 }
 
