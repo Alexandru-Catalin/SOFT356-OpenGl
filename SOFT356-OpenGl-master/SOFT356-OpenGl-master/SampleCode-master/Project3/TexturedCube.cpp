@@ -59,7 +59,7 @@ void readTexture(float& out_Ns,
 
 	if (readFile.is_open()) {
 		while (getline(readFile, read)) {
-			std::cout << read << std::endl;
+			
 			if (read[0] == 'K' && read[1] == 'a')
 			{
 				istringstream iss(read.substr(2));
@@ -67,7 +67,7 @@ void readTexture(float& out_Ns,
 				iss >> out_Ka.y;
 				iss >> out_Ka.z;
 				out_Ka.w = 1.0;
-				cout << out_Ka.x;
+				
 			}
 			else if (read[0] == 'K' && read[1] == 'd')
 			{
@@ -75,7 +75,7 @@ void readTexture(float& out_Ns,
 				iss >> out_Kd.x;
 				iss >> out_Kd.y;
 				iss >> out_Kd.z;
-				cout << out_Kd.x;
+			
 			}
 			else if (read[0] == 'K' && read[1] == 's')
 			{
@@ -83,7 +83,7 @@ void readTexture(float& out_Ns,
 				iss >> out_Ks.x;
 				iss >> out_Ks.y;
 				iss >> out_Ks.z;
-				cout << out_Ks.x;
+				
 			}
 			else if (read.substr(0, 6) == "map_Kd")
 			{
@@ -94,7 +94,7 @@ void readTexture(float& out_Ns,
 			{
 				istringstream iss(read.substr(2));
 				iss >> trans;
-				cout << trans;
+			
 			}
 
 		}
@@ -111,11 +111,12 @@ void findFile(
 	std::vector<glm::vec3>& out_normals, string& file
 )
 {
-
+	
 	//read the file
+
 	string find;
 	ifstream findFile("media/" + file + ".obj");
-
+	
 	vector<unsigned int> vertexIndices, uvIndices, normalIndices;
 	vector<glm::vec3> temp_vertices;
 	vector<glm::vec2> temp_uvs;
@@ -125,7 +126,7 @@ void findFile(
 	{
 		while (getline(findFile, find))
 		{
-			std::cout << find << std::endl;
+			
 			if (find[0] == 'v' && find[1] == ' ')
 			{
 				glm::vec3 vertex;
@@ -134,7 +135,7 @@ void findFile(
 				iss >> vertex.y;
 				iss >> vertex.z;
 				temp_vertices.push_back(vertex);
-				cout << vertex.x;
+			
 			}
 			else if (find[0] == 'v' && find[1] == 't')
 			{
@@ -143,7 +144,7 @@ void findFile(
 				iss >> uv.x;
 				iss >> uv.y;
 				temp_uvs.push_back(uv);
-				cout << uv.x;
+				
 
 			}
 			else if (find[0] == 'v' && find[1] == 'n')
@@ -154,7 +155,7 @@ void findFile(
 				iss >> normal.y;
 				iss >> normal.z;
 				temp_normals.push_back(normal);
-				cout << normal.x;
+			
 			}
 			else if (find[0] == 'f' && find[1] == ' ')
 			{
@@ -217,7 +218,7 @@ void findFile(
 				normalIndices.push_back(normalIndex[2]);
 				normalIndices.push_back(normalIndex[3]);
 
-				cout << vertexIndex[0] << uvIndex[0] << normalIndex[0] << endl;
+				
 			}
 		}
 	}
