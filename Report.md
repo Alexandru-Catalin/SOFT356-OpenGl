@@ -8,6 +8,7 @@ I'm using Visual Studio Professional 2019, and OpenGL Version 4.0
 <h3> How to use it </h3>
 
 Step.1: Open Visual Studio and locate the filed named "SampleProjects.sln" (you may have to reinstall the package, for that type in the console "nupengl.core").
+
 Step.1.2: In case the glm library is not working, in visual studio you will have to right click on "Project3" select "Properties", "VC++ Directories", "Include Directories", "Edit", and locate the "glm" and "doc" folder. (Example: C:\Users\amarcu\Desktop\Model Loader\SOFT356-OpenGl-master\SOFT356-OpenGl-master\SampleCode-master).
 
 Step.2: Press the green button "Local Windows Debugger".
