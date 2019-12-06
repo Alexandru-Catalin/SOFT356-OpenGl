@@ -161,7 +161,9 @@ void findFile(
 				std::getline(iss, set1, ' ');
 				std::getline(iss, set2, ' ');
 				std::getline(iss, set3, ' ');
+
 				std::getline(iss, set4, ' ');
+			
 
 				istringstream iss1(set1), iss2(set2), iss3(set3), iss4(set4);
 				//set1
@@ -176,10 +178,6 @@ void findFile(
 				std::getline(iss3, vt3, '/');
 				std::getline(iss3, vt4, '/');
 				std::getline(iss3, vn1, '/');
-				//set4
-				std::getline(iss4, vn2, '/');
-				std::getline(iss4, vn3, '/');
-				std::getline(iss4, vn4, '/');
 
 				vertexIndex[0] = atoi(v1.c_str());
 				uvIndex[0] = atoi(v2.c_str());
@@ -193,25 +191,63 @@ void findFile(
 				uvIndex[2] = atoi(vt4.c_str());
 				normalIndex[2] = atoi(vn1.c_str());
 
-				vertexIndex[3] = atoi(vn2.c_str());
-				uvIndex[3] = atoi(vn3.c_str());
-				normalIndex[3] = atoi(vn4.c_str());
-
 				vertexIndices.push_back(vertexIndex[0]);
 				vertexIndices.push_back(vertexIndex[1]);
 				vertexIndices.push_back(vertexIndex[2]);
-				vertexIndices.push_back(vertexIndex[3]);
+		
 
 				uvIndices.push_back(uvIndex[0]);
 				uvIndices.push_back(uvIndex[1]);
 				uvIndices.push_back(uvIndex[2]);
-				uvIndices.push_back(uvIndex[3]);
+		
 
 				normalIndices.push_back(normalIndex[0]);
 				normalIndices.push_back(normalIndex[1]);
 				normalIndices.push_back(normalIndex[2]);
-				normalIndices.push_back(normalIndex[3]);
 
+				bool check = false;
+				if (set4 == "")
+				{
+					check = true;
+			
+
+				}
+				else
+				{
+
+					check = false;
+				
+					//set4
+					std::getline(iss4, vn2, '/');
+					std::getline(iss4, vn3, '/');
+					std::getline(iss4, vn4, '/');
+
+					glm::vec3 vertexTemp;
+					glm::vec2 uvTemp;
+					glm::vec3 normalTemp;
+
+					glm::vec3 vertex;
+					glm::vec2 uv;
+					glm::vec3 normal;
+
+					glm::vec3 vertexTemp1;
+					glm::vec2 uvTemp1;
+					glm::vec3 normalTemp1;
+
+					vertexIndices.push_back(vertexIndex[0]);
+					uvIndices.push_back(uvIndex[0]);
+					normalIndices.push_back(normalIndex[0]);
+					vertexIndices.push_back(vertexIndex[2]);
+					uvIndices.push_back(uvIndex[2]);
+					normalIndices.push_back(normalIndex[2]);
+					vertexIndex[3] = atoi(vn2.c_str());
+					uvIndex[3] = atoi(vn3.c_str());
+					normalIndex[3] = atoi(vn4.c_str());
+					vertexIndices.push_back(vertexIndex[3]);
+					uvIndices.push_back(uvIndex[3]);
+					normalIndices.push_back(normalIndex[3]);
+
+				}
 
 			}
 		}
@@ -236,49 +272,10 @@ void findFile(
 		glm::vec3 vertex = temp_vertices[vertexIndex - 1];
 		glm::vec2 uv = temp_uvs[uvIndex - 1];
 		glm::vec3 normal = temp_normals[normalIndex - 1];
-
-		// Put the attributes in buffers
-		if (count != 3) {
-			out_vertices.push_back(vertex);
-			out_uvs.push_back(uv);
-			out_normals.push_back(normal);
-		}
-
-		if (count == 0)
-		{
-			//Save A
-			vertexTemp = vertex;
-			uvTemp = uv;
-			normalTemp = normal;
-		}
-		else if (count == 2)
-		{
-			//Push C
-
-			vertexTemp1 = vertex;
-			uvTemp1 = uv;
-			normalTemp1 = normal;
-
-		}
-		else if (count == 3)
-		{
-			//push A
-			out_vertices.push_back(vertexTemp);
-			out_uvs.push_back(uvTemp);
-			out_normals.push_back(normalTemp);
-
-			out_vertices.push_back(vertexTemp1);
-			out_uvs.push_back(uvTemp1);
-			out_normals.push_back(normalTemp1);
-
-			out_vertices.push_back(vertex);
-			out_uvs.push_back(uv);
-			out_normals.push_back(normal);
-
-
-			count = -1;
-		}
-		count++;
+		out_vertices.push_back(vertex);
+		out_uvs.push_back(uv);
+		out_normals.push_back(normal);
+			
 	}
 	findFile.close();
 }
